@@ -117,7 +117,8 @@ public class State {
 			legalActions.add(Actions.TURN_OFF);
 			return legalActions;
 		}
-		
+
+		/* Agent is not faced towards an obstacle or a wall */
 		if (!isAgentFacedTowardsWall(mapInfo) && !isAgentFacedTowardsObstacle(mapInfo))
 		{
 			legalActions.add(Actions.GO);
@@ -126,7 +127,12 @@ public class State {
 			return legalActions;
 		}
 
-
+		/* Agent is faced towards an obstacle or a wall */
+		if (isAgentFacedTowardsWall(mapInfo) || isAgentFacedTowardsObstacle(mapInfo)){
+			legalActions.add(Actions.TURN_LEFT);
+			legalActions.add(Actions.TURN_RIGHT);
+			return legalActions;
+		}
 		
 		return legalActions;
 	}
