@@ -118,13 +118,15 @@ public class State {
 			return legalActions;
 		}
 		
-		legalActions.add(Actions.TURN_RIGHT);
-		legalActions.add(Actions.TURN_LEFT);
-		
 		if (!isAgentFacedTowardsWall(mapInfo) && !isAgentFacedTowardsObstacle(mapInfo))
 		{
 			legalActions.add(Actions.GO);
+			legalActions.add(Actions.TURN_RIGHT);
+			legalActions.add(Actions.TURN_LEFT);
+			return legalActions;
 		}
+
+
 		
 		return legalActions;
 	}
