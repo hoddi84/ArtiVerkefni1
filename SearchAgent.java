@@ -1,13 +1,11 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SearchAgent implements Agent
 {
-	private Random random = new Random();
 	private MapInfo mapInfo;
 	private State state;
 
@@ -99,6 +97,6 @@ public class SearchAgent implements Agent
 		}
 		System.out.println("");
 		String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" };
-		return actions[random.nextInt(actions.length)];
+		return actions[0];
 	}
 }
