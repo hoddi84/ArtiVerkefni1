@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class State {
+public class State implements Cloneable {
 	public Orientation orientation;
 	public Position position;
 	public boolean turned_on;
@@ -13,6 +13,123 @@ public class State {
 		this.orientation = orientation;
 		this.turned_on = turned_on;
 		this.dirt = dirt;
+	}
+	
+	/* Make a copy of this state object
+	 * All the members are also new copies
+	 * such as the position */
+	public State makeCopy()
+	{
+		Position newPos = new Position(this.position.x, this.position.y);
+		Collection<Position> newDirt = new ArrayList<Position>();
+		int n = dirt.size();
+		for (int i = 0; i < n; i++)
+		{
+			Position dirtPos = ((ArrayList<Position>)dirt).get(i);
+			newDirt.add(new Position(dirtPos.x, dirtPos.y));
+		}
+		return new State(newPos, this.orientation, this.turned_on, newDirt);
+	}
+	
+	/* Get the next state for a given action
+	 * The action must be a legal action
+	 * else the resulting new state will be incorrect
+	 *  */
+	public State getNextState(String action) throws Exception
+	{
+		State newState = this.makeCopy();
+		if (action == Actions.TURN_ON)
+		{
+			newState.turned_on = true;
+			return newState;
+		}
+		
+		if (action == Actions.TURN_OFF)
+		{
+			newState.turned_on = false;
+			return newState;
+		}
+		
+		if (action == Actions.SUCK)
+		{
+			int n = newState.dirt.size();
+			for (int i = 0; i < n; i++)
+			{
+				Position dirtPos = ((ArrayList<Position>)newState.dirt).get(i);
+				if (this.position.equals(dirtPos))
+				{
+					newState.dirt.remove(i);
+					return newState;
+				}
+			}
+		}
+		
+		if (action == Actions.GO)
+		{
+			if (this.orientation == Orientation.NORTH)
+			{
+				newState.position.y += 1;
+			}
+			else if (this.orientation == Orientation.SOUTH)
+			{
+				newState.position.y -= 1;
+			}
+			else if (this.orientation == Orientation.EAST)
+			{
+				newState.position.x += 1;
+			}
+			else if (this.orientation == Orientation.WEST)
+			{
+				newState.position.x -= 1;
+			}
+			return newState;
+		}
+		
+		if (action == Actions.TURN_RIGHT)
+		{
+			if (this.orientation == Orientation.NORTH)
+			{
+				newState.orientation = Orientation.EAST;
+			}
+			else if (this.orientation == Orientation.EAST)
+			{
+				newState.orientation = Orientation.SOUTH;
+			}
+			else if (this.orientation == Orientation.SOUTH)
+			{
+				newState.orientation = Orientation.WEST;
+			}
+			else if (this.orientation == Orientation.WEST)
+			{
+				newState.orientation = Orientation.NORTH;
+			}
+			return newState;
+		}
+		
+		if (action == Actions.TURN_LEFT)
+		{
+			if (this.orientation == Orientation.NORTH)
+			{
+				newState.orientation = Orientation.WEST;
+			}
+			else if (this.orientation == Orientation.WEST)
+			{
+				newState.orientation = Orientation.SOUTH;
+			}
+			else if (this.orientation == Orientation.SOUTH)
+			{
+				newState.orientation = Orientation.EAST;
+			}
+			else if (this.orientation == Orientation.EAST)
+			{
+				newState.orientation = Orientation.NORTH;
+			}
+			return newState;
+		}
+		
+		throw new Exception("Not a valid action string");
+		//State nextState = new State();
+		//return newState;
 	}
 	
 	public boolean isGoal(MapInfo mapInfo)
