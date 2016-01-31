@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,17 +42,20 @@ public class SearchAgent implements Agent
 				if (perceptName.equals("HOME")) {
 					Matcher m = Pattern.compile("\\(\\s*HOME\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
+						System.out.println(perceptName + " is at " + m.group(1) + "," + m.group(2));
 						homePos.x = Integer.valueOf(m.group(1));
 						homePos.y = Integer.valueOf(m.group(2));
 					}
 				} else if (perceptName.equals("ORIENTATION")) {
 					Matcher m = Pattern.compile("\\(\\s*ORIENTATION\\s+([A-Z]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
+						System.out.println(perceptName + " is " + m.group(1));
 						ori = Orientation.valueOf(m.group(1));
 					}
 				} else if (perceptName.equals("SIZE")) {
 					Matcher m = Pattern.compile("\\(\\s*SIZE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
+						System.out.println(perceptName + " is " + m.group(1) + "," + m.group(2));
 						sizeX = Integer.valueOf(m.group(1));
 						sizeY = Integer.valueOf(m.group(2));
 					}
@@ -60,9 +64,11 @@ public class SearchAgent implements Agent
 					if (m.matches()) {
 						String atName = m.group(1);
 						if (atName.equals("DIRT")) {
+							System.out.println(atName + " is at " + m.group(2) + "," + m.group(3));
 							dirts.add(new Position(Integer.valueOf(m.group(2)), Integer.valueOf(m.group(3))));
 						}
 						else if (atName.equals("OBSTACLE")) {
+							System.out.println(atName + " is at " + m.group(2) + "," + m.group(3));
 							obstacles.add(new Position(Integer.valueOf(m.group(2)), Integer.valueOf(m.group(3))));
 						}
 					}
