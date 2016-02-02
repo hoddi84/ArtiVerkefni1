@@ -1,14 +1,21 @@
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Random;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.event.ListSelectionEvent;
 
 public class SearchAgent implements Agent
 {
 	private MapInfo mapInfo;
 	private State state;
+	
+	private Node goalNode;
+	private LinkedList<String> goalPath;
 
 	/*
 		init(Collection<String> percepts) is called once before you have to select the first action. Use it to find a plan. Store the plan and just execute it step by step in nextAction.
@@ -42,20 +49,20 @@ public class SearchAgent implements Agent
 				if (perceptName.equals("HOME")) {
 					Matcher m = Pattern.compile("\\(\\s*HOME\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
-						System.out.println(perceptName + " is at " + m.group(1) + "," + m.group(2));
+						//System.out.println(perceptName + " is at " + m.group(1) + "," + m.group(2));
 						homePos.x = Integer.valueOf(m.group(1));
 						homePos.y = Integer.valueOf(m.group(2));
 					}
 				} else if (perceptName.equals("ORIENTATION")) {
 					Matcher m = Pattern.compile("\\(\\s*ORIENTATION\\s+([A-Z]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
-						System.out.println(perceptName + " is " + m.group(1));
+						//System.out.println(perceptName + " is " + m.group(1));
 						ori = Orientation.valueOf(m.group(1));
 					}
 				} else if (perceptName.equals("SIZE")) {
 					Matcher m = Pattern.compile("\\(\\s*SIZE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
-						System.out.println(perceptName + " is " + m.group(1) + "," + m.group(2));
+						//System.out.println(perceptName + " is " + m.group(1) + "," + m.group(2));
 						sizeX = Integer.valueOf(m.group(1));
 						sizeY = Integer.valueOf(m.group(2));
 					}
@@ -64,11 +71,11 @@ public class SearchAgent implements Agent
 					if (m.matches()) {
 						String atName = m.group(1);
 						if (atName.equals("DIRT")) {
-							System.out.println(atName + " is at " + m.group(2) + "," + m.group(3));
+							//System.out.println(atName + " is at " + m.group(2) + "," + m.group(3));
 							dirts.add(new Position(Integer.valueOf(m.group(2)), Integer.valueOf(m.group(3))));
 						}
 						else if (atName.equals("OBSTACLE")) {
-							System.out.println(atName + " is at " + m.group(2) + "," + m.group(3));
+							//System.out.println(atName + " is at " + m.group(2) + "," + m.group(3));
 							obstacles.add(new Position(Integer.valueOf(m.group(2)), Integer.valueOf(m.group(3))));
 						}
 					}
@@ -82,7 +89,6 @@ public class SearchAgent implements Agent
 		
 		mapInfo = new MapInfo(sizeX, sizeY, obstacles, homePos);
 		state = new State(homePos, ori, false, dirts);
-		
 		// Debug
 		System.out.println("MapInfo: ");
 		System.out.println("\tSizeX: " + mapInfo.sizeX);
@@ -94,6 +100,34 @@ public class SearchAgent implements Agent
 		System.out.println("\tOrientation: " + state.orientation);
 		System.out.println("\tTurned on: " + state.turned_on);
 		System.out.println("\tDirts: " + Arrays.toString(dirts.toArray()));
+		
+		
+		// Start searching
+		Node startNode = new Node();
+		startNode.parentNode = null;
+		startNode.state = state;
+		startNode.Action = "";
+		System.out.println("Starting search");
+		goalNode = SearchUtil.breadthFirstSearch(startNode, mapInfo);
+		System.out.println("search done");
+		
+		goalPath = createPath();
+    }
+    
+	// Traverse through parent nodes to create the full path
+    public LinkedList<String> createPath() {
+    	System.out.println("Creating action path");
+		Node current = goalNode;
+		LinkedList<String> actionPath = new LinkedList<String>();
+		while (current.parentNode != null)
+		{
+			actionPath.add(current.Action);
+			current = current.parentNode;
+		}
+		System.out.println("Length: " + actionPath.size());
+		System.out.println(actionPath);
+		
+    	return actionPath;
     }
     
     public String nextAction(Collection<String> percepts) {
@@ -102,7 +136,8 @@ public class SearchAgent implements Agent
 			System.out.print("'" + percept + "', ");
 		}
 		System.out.println("");
-		String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" };
-		return actions[0];
+		
+		//String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" };
+		return goalPath.removeLast();
 	}
 }

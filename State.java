@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class State implements Cloneable {
@@ -58,7 +59,7 @@ public class State implements Cloneable {
 				Position dirtPos = ((ArrayList<Position>)newState.dirt).get(i);
 				if (this.position.equals(dirtPos))
 				{
-					newState.dirt.remove(i);
+					newState.dirt.remove(dirtPos);
 					return newState;
 				}
 			}
@@ -132,9 +133,14 @@ public class State implements Cloneable {
 		//return newState;
 	}
 	
-	public boolean isGoal(MapInfo mapInfo)
+	public boolean isHome(MapInfo mapInfo) 
 	{
 		return (dirt.isEmpty() && position.equals(mapInfo.agentHome));
+	}
+	
+	public boolean isGoal(MapInfo mapInfo)
+	{
+		return (dirt.isEmpty() && position.equals(mapInfo.agentHome) && !turned_on);
 	}
 	
 	/* Check if the given position is in a collection of positions */
@@ -211,11 +217,11 @@ public class State implements Cloneable {
 		return false;
 	}
 	
-	public Collection<String> getLegalActions(MapInfo mapInfo)
+	public ArrayList<String> getLegalActions(MapInfo mapInfo)
 	{
 		/* These are only the actions that are rational for the agent
 		 * it its current state */
-		Collection<String> legalActions = new ArrayList<String>();
+		ArrayList<String> legalActions = new ArrayList<String>();
 		
 		if (!turned_on)
 		{
@@ -229,7 +235,7 @@ public class State implements Cloneable {
 			return legalActions;
 		}
 		
-		if (isGoal(mapInfo))
+		if (isHome(mapInfo))
 		{
 			legalActions.add(Actions.TURN_OFF);
 			return legalActions;
