@@ -89,6 +89,7 @@ public class SearchAgent implements Agent
 		
 		mapInfo = new MapInfo(sizeX, sizeY, obstacles, homePos);
 		state = new State(homePos, ori, false, dirts);
+
 		// Debug
 		System.out.println("MapInfo: ");
 		System.out.println("\tSizeX: " + mapInfo.sizeX);

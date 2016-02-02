@@ -1,25 +1,8 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class SearchUtil {
-	
-	public static void LinkedListTest()
-	{
-		System.out.println("queue");
-		Queue<String> frontier = new LinkedList<String>();
-		frontier.add("7");
-		frontier.add("5");
-		frontier.add("7");
-		frontier.add("11");
-		String x = frontier.remove();
-		
-		System.out.println(x + " size: " + frontier.size());
-		
-		
-	}
 	
 	public static Node breadthFirstSearch(Node startNode, MapInfo mapInfo)
 	{
@@ -36,9 +19,8 @@ public class SearchUtil {
 			{
 				return current;
 			}
+
 			ArrayList<String> action = current.state.getLegalActions(mapInfo);
-			//System.out.println(Arrays.toString(action.toArray()));
-			
 			for (int i = 0; i < action.size(); i++)
 			{
 				Node nextNode = new Node();
