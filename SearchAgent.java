@@ -83,6 +83,14 @@ public class SearchAgent implements Agent
 		mapInfo = new MapInfo(sizeX, sizeY, obstacles, homePos);
 		state = new State(homePos, ori, false, dirts);
 		
+		Node startNode = new Node();
+		startNode.parentNode = null;
+		startNode.state = state;
+		startNode.Action = "";
+		System.out.println("Starting search");
+		Node goalNode = SearchUtil.breathFirstSearch(startNode, mapInfo);
+		System.out.println("search done");
+		
 		// Debug
 		System.out.println("MapInfo: ");
 		System.out.println("\tSizeX: " + mapInfo.sizeX);

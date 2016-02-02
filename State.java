@@ -211,11 +211,11 @@ public class State implements Cloneable {
 		return false;
 	}
 	
-	public Collection<String> getLegalActions(MapInfo mapInfo)
+	public ArrayList<String> getLegalActions(MapInfo mapInfo)
 	{
 		/* These are only the actions that are rational for the agent
 		 * it its current state */
-		Collection<String> legalActions = new ArrayList<String>();
+		ArrayList<String> legalActions = new ArrayList<String>();
 		
 		if (!turned_on)
 		{

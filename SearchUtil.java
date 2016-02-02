@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -22,24 +23,35 @@ public class SearchUtil {
 	public static Node breathFirstSearch(Node startNode, MapInfo mapInfo)
 	{
 		Node start = startNode;
-		Queue<Node> frontier = new LinkedList<Node>();
+		LinkedList<Node> frontier = new LinkedList<Node>();
 		frontier.add(start);
 		
 		while (!frontier.isEmpty())
 		{
-			Node current = frontier.remove();
+			//removeFirst -> queue
+			//removeLast -> stack
+			Node current = frontier.removeFirst();
 			if (current.state.isGoal(mapInfo))
 			{
 				return current;
 			}
-			Collection<String> action = current.state.getLegalActions(mapInfo);
+			ArrayList<String> action = current.state.getLegalActions(mapInfo);
 			for (int i = 0; i < action.size(); i++)
 			{
-				//frontier.add(current.state.get);
-				//TODO update method for state that takes
-				//in an action and returns a new state
+				Node nextNode = new Node();
+				nextNode.parentNode = current;
+				nextNode.Action = action.get(i);
+				try
+				{
+				nextNode.state = current.state.getNextState(action.get(i));
+				}
+				catch (Exception e)
+				{
+					System.out.println(e.getMessage());
+				}
+				frontier.add(nextNode);
 			}
-			
+			System.out.println("size of frontier: " + frontier.size());
 		}
 		
 		return null;
