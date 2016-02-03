@@ -1,9 +1,9 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.PriorityQueue;
 
 public class Main {
-	
 	/**
 	 * starts the game player and waits for messages from the game master <br>
 	 * Command line options: [port]

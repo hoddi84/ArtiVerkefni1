@@ -251,4 +251,29 @@ public class State implements Cloneable {
 		
 		return legalActions;
 	}
+
+	public int hashCode()
+	{
+		int prime = 3907;
+
+		int turnedOn = turned_on ? 0 : 1;
+
+		int hash = 1;
+		hash = (hash * prime + position.x);
+		hash = (hash * prime + position.y);
+		hash = (hash * prime + this.orientation.ordinal());
+		hash = (hash * prime + turnedOn);
+		return hash;
+
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		State s = (State) obj;
+		if (this.orientation == s.orientation && this.position.equals(s.position) && this.turned_on == s.turned_on) {
+			return true;
+		}
+		return false;
+	}
 }
