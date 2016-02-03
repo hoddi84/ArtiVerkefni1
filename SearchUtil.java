@@ -51,7 +51,7 @@ public class SearchUtil {
 				}
 				frontier.add(nextNode);
 			}
-			System.out.println("size of frontier: " + frontier.size());
+			//System.out.println("size of frontier: " + frontier.size());
 		}
 		
 		return null;
