@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,6 +15,40 @@ public class State {
 		this.orientation = orientation;
 		this.turned_on = turned_on;
 		this.dirt = dirt;
+	}
+	
+	public int hashCode()
+	{
+		int ori = 0;
+		if (this.orientation == Orientation.SOUTH)
+		{
+			ori = 1;
+		}
+		if (this.orientation == Orientation.EAST)
+		{
+			ori = 2;
+		}
+		if (this.orientation == Orientation.WEST)
+		{
+			ori = 3;
+		}
+		
+		int turnedOn = turned_on ? 0 : 1;
+		
+        int hash = 1;
+        int bigPrime = 6029;
+        hash = hash * bigPrime + position.x;
+        hash = hash * bigPrime + position.y;
+        hash = hash * bigPrime + ori;
+        hash = hash * bigPrime + turnedOn;
+
+		int dirts = this.dirt.size();
+		for(int i = 0; i < dirts; i++) {
+			Position dirtPos = ((ArrayList<Position>)dirt).get(i);
+			hash = hash * bigPrime + dirtPos.x;
+			hash = hash * bigPrime + dirtPos.y;
+		}
+        return hash;
 	}
 	
 	/* Make a copy of this state object
