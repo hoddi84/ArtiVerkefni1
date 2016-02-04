@@ -1,4 +1,4 @@
 
 public enum SearchType {
-	DFS, BFS, UniformCostSearch
+	DFS, BFS, UniformCostSearch, A_Star
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class State implements Cloneable {
@@ -15,31 +16,31 @@ public class State implements Cloneable {
 		this.dirt = dirt;
 	}
 	
-	@Override
-	public boolean equals(Object o) {
-		State s = (State) o;
-		return (position.equals(s)
-				&& orientation == s.orientation
-				&& turned_on == s.turned_on
-				&& dirt.size() == s.dirt.size());
-	}
-	
-	@Override
-	public int hashCode() {
-		// Largest top 10.000 primes
-		// ... 104659 104677 104681 104683 104693 104701 104707 104711 104717 104723 104729 
-		int prime = 47;
+	public int hashCode()
+	{
+		int ori = 0;
+		if (this.orientation == Orientation.SOUTH)
+		{
+			ori = 1;
+		}
+		if (this.orientation == Orientation.EAST)
+		{
+			ori = 2;
+		}
+		if (this.orientation == Orientation.WEST)
+		{
+			ori = 3;
+		}
 		
-		int ori = this.orientation.ordinal() * prime;
-		int turnedOn = turned_on ? prime : 31;
+		int turnedOn = turned_on ? 0 : 1;
 		
-		int hash = prime;
-		hash = hash * prime + ori;
-		hash = hash * prime + turnedOn;
-		hash = hash * prime + position.x;
-		hash = hash * prime + position.y;
-		hash = hash * prime + dirt.size();
-		return hash;
+        int hash = 1;
+        int bigPrime = 6029;
+        hash = hash * bigPrime + position.x;
+        hash = hash * bigPrime + position.y;
+        hash = hash * bigPrime + ori;
+        hash = hash * bigPrime + turnedOn;
+        return hash;
 	}
 	
 	/* Make a copy of this state object

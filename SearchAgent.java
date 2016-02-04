@@ -1,9 +1,13 @@
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.event.ListSelectionEvent;
 
 public class SearchAgent implements Agent
 {
@@ -106,14 +110,14 @@ public class SearchAgent implements Agent
 		startNode.Action = "";
 		startNode.costFromRoot = 0;
 		System.out.println("Starting search");
-		goalNode = SearchUtil.search(startNode, mapInfo, SearchType.BFS);
+		goalNode = SearchUtil.search(startNode, mapInfo, SearchType.A_Star);
 		System.out.println("search done");
 		
-		goalPath = createPath(goalNode);
+		goalPath = createPath();
     }
     
 	// Traverse through parent nodes to create the full path
-    public static LinkedList<String> createPath(Node goalNode) {
+    public LinkedList<String> createPath() {
     	System.out.println("Creating action path");
 		Node current = goalNode;
 		LinkedList<String> actionPath = new LinkedList<String>();
@@ -129,6 +133,12 @@ public class SearchAgent implements Agent
     }
     
     public String nextAction(Collection<String> percepts) {
+		System.out.print("perceiving:");
+		for(String percept:percepts) {
+			System.out.print("'" + percept + "', ");
+		}
+		System.out.println("");
+		
 		//String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" };
 		return goalPath.removeLast();
 	}
