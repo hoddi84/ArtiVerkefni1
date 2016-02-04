@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class State implements Cloneable {
+public class State {
 	public Orientation orientation;
 	public Position position;
 	public boolean turned_on;
