@@ -110,10 +110,16 @@ public class SearchAgent implements Agent
 		startNode.Action = "";
 		startNode.costFromRoot = 0;
 		System.out.println("Starting search");
-		goalNode = SearchUtil.search(startNode, mapInfo, SearchType.A_Star);
+		goalNode = SearchUtil.search(startNode, mapInfo, SearchType.BFS);
 		System.out.println("search done");
-		
-		goalPath = createPath();
+
+		try {
+			goalPath = createPath();
+		}
+		catch (Exception e) {
+			System.out.println("No goal found");
+		}
+
     }
     
 	// Traverse through parent nodes to create the full path

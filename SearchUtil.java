@@ -199,7 +199,6 @@ public class SearchUtil {
 				
 			}
 		}
-		
 		return null;
 	}
 }

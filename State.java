@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -40,6 +41,13 @@ public class State implements Cloneable {
         hash = hash * bigPrime + position.y;
         hash = hash * bigPrime + ori;
         hash = hash * bigPrime + turnedOn;
+
+		int dirts = this.dirt.size();
+		for(int i = 0; i < dirts; i++) {
+			Position dirtPos = ((ArrayList<Position>)dirt).get(i);
+			hash = hash * bigPrime + dirtPos.x;
+			hash = hash * bigPrime + dirtPos.y;
+		}
         return hash;
 	}
 	
