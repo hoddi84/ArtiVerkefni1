@@ -56,8 +56,8 @@ public class GamePlayer extends NanoHTTPD {
 		try{
 			String response_string=null;
 			if(data!=null){
-				System.out.println(DateFormat.getTimeInstance(DateFormat.FULL).format(Calendar.getInstance().getTime()));
-				System.out.println("Command: " + data);
+				//System.out.println(DateFormat.getTimeInstance(DateFormat.FULL).format(Calendar.getInstance().getTime()));
+				//System.out.println("Command: " + data);
 				String command=getCommand(data);
 				if(command==null){
 					throw(new IllegalArgumentException("Unknown message format"));
@@ -77,8 +77,8 @@ public class GamePlayer extends NanoHTTPD {
 			}else{
 				throw(new IllegalArgumentException("Message is empty!"));
 			}
-			System.out.println(DateFormat.getTimeInstance(DateFormat.FULL).format(Calendar.getInstance().getTime()));
-			System.out.println("Response:"+response_string);
+			//System.out.println(DateFormat.getTimeInstance(DateFormat.FULL).format(Calendar.getInstance().getTime()));
+			//System.out.println("Response:"+response_string);
 			if(response_string!=null && response_string.equals("")) response_string=null;
 			return new Response( HTTP_OK, "text/acl", response_string );
 		}catch(IllegalArgumentException ex){

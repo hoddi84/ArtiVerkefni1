@@ -110,16 +110,14 @@ public class SearchAgent implements Agent
 		startNode.Action = "";
 		startNode.costFromRoot = 0;
 		System.out.println("Starting search");
-		goalNode = SearchUtil.search(startNode, mapInfo, SearchType.BFS);
-		System.out.println("search done");
+		long startTime = System.nanoTime();
+		goalNode = SearchUtil.search(startNode, mapInfo, SearchType.DFS);
+		long calcTime = System.nanoTime() - startTime;
+		System.out.println("Search done");
+		System.out.println("Seach took: " + calcTime*0.000000001 + " seconds.");
 
-		try {
-			goalPath = createPath();
-		}
-		catch (Exception e) {
-			System.out.println("No goal found");
-		}
-
+		
+		goalPath = createPath();
     }
     
 	// Traverse through parent nodes to create the full path
@@ -139,11 +137,11 @@ public class SearchAgent implements Agent
     }
     
     public String nextAction(Collection<String> percepts) {
-		System.out.print("perceiving:");
+		//System.out.print("perceiving:");
 		for(String percept:percepts) {
-			System.out.print("'" + percept + "', ");
+			//System.out.print("'" + percept + "', ");
 		}
-		System.out.println("");
+		//System.out.println("");
 		
 		//String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" };
 		return goalPath.removeLast();

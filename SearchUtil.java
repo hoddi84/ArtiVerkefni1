@@ -120,9 +120,9 @@ public class SearchUtil {
 		}
 		
 		int h = agentDistance + homeDistance + dirtTotalDistance;
-		System.out.println("AGENT=" + agentDistance + "," +
-		"HOME=" + homeDistance + "," +
-		"DIRT=" + dirtTotalDistance);
+		//System.out.println("AGENT=" + agentDistance + "," +
+		//"HOME=" + homeDistance + "," +
+		//"DIRT=" + dirtTotalDistance);
 		
 		return h;
 	}
@@ -130,7 +130,7 @@ public class SearchUtil {
 	public static Node search(Node startNode, MapInfo mapInfo, SearchType searchType)
 	{
 		Collection<Integer> visitedStates = new ArrayList<Integer>();
-		
+		int stateSpace = 0;
 		
 		Node start = startNode;
 		Collection<Node> frontier = null;
@@ -171,14 +171,17 @@ public class SearchUtil {
 			
 			if (current.state.isGoal(mapInfo))
 			{
+				System.out.println("Number of state expansions: " + stateSpace);
+				System.out.println("Size of frontier: " + frontier.size());
 				return current;
 			}
 
 			ArrayList<String> action = current.state.getLegalActions(mapInfo);
-			Collections.shuffle(action);
+			//Collections.shuffle(action);
 			for (int i = 0; i < action.size(); i++)
 			{
 				Node nextNode = new Node();
+				stateSpace += 1;
 				nextNode.parentNode = current;
 				nextNode.costFromRoot = current.costFromRoot + 1;
 				nextNode.Action = action.get(i);
@@ -199,6 +202,7 @@ public class SearchUtil {
 				
 			}
 		}
+		
 		return null;
 	}
 }

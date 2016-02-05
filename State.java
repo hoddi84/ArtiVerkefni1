@@ -1,9 +1,8 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class State {
+public class State implements Cloneable {
 	public Orientation orientation;
 	public Position position;
 	public boolean turned_on;
@@ -42,11 +41,11 @@ public class State {
         hash = hash * bigPrime + ori;
         hash = hash * bigPrime + turnedOn;
 
-		int dirts = this.dirt.size();
-		for(int i = 0; i < dirts; i++) {
-			Position dirtPos = ((ArrayList<Position>)dirt).get(i);
-			hash = hash * bigPrime + dirtPos.x;
-			hash = hash * bigPrime + dirtPos.y;
+		int dirtSize = this.dirt.size();
+		for (int i = 0; i < dirtSize; i++) {
+			Position dirts = ((ArrayList<Position>)dirt).get(i);
+			hash = hash * bigPrime + dirts.x;
+			hash = hash * bigPrime + dirts.y;
 		}
         return hash;
 	}
