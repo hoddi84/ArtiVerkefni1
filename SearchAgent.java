@@ -111,7 +111,7 @@ public class SearchAgent implements Agent
 		startNode.costFromRoot = 0;
 		System.out.println("Starting search");
 		long startTime = System.nanoTime();
-		goalNode = SearchUtil.search(startNode, mapInfo, SearchType.DFS);
+		goalNode = SearchUtil.search(startNode, mapInfo, SearchType.BFS);
 		long calcTime = System.nanoTime() - startTime;
 		System.out.println("Search done");
 		System.out.println("Seach took: " + calcTime*0.000000001 + " seconds.");
