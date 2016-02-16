@@ -1,5 +1,4 @@
 # ArtiVerkefni1
-## Artificial Intelligence
 ## Programming Assignment 1 - Search
 
-Vaccumcleaner agent that can use depth-first, breadth-first, uniform-cost and A* search to find the path through the environment that sucks up all the dirt and goes back to its home position to turn off.
+A vaccumcleaner agent that can use depth-first, breadth-first, uniform-cost or A* search to find the path through the environment that includes sucking up all the dirt and going back to the agent's home position to turn off.
